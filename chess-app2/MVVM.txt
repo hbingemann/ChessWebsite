@@ -1,0 +1,19 @@
+Model (flask):
+ - track current user session
+ - tracks moves made on the board
+ - loads pgn from chess.com and lichess (maybe some from major tournaments?)
+
+View (react):
+ - chessboard
+ - drag and drop
+ - move buttons that change board
+ - a function that can be called to get promotion piece
+
+View-Model (js):
+ - handles chess move logic
+ - receive moves from View
+ - add moves to Model
+ - call promotion piece function when promoting
+ - OBSERVER PATTERN:
+   - when chess.js is updated, update View
+
