@@ -1,0 +1,7 @@
+make move clicking work
+change css so that the move tracker looks a little better ...
+add loading pgns
+make stockfish show best move
+connect loading pgns to backend
+be able to load chess.com and lichess pgns
+be able to load world chess championship pgns (hide spoilers)

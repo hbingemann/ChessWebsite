@@ -6,4 +6,8 @@ const HomePage = () => {
     )
 }
 
+// Ideas for Home Page:
+// - have links to different parts of website
+// - explain what can be done on the website
+
 export default HomePage
