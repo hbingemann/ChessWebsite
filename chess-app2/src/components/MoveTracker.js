@@ -1,29 +1,50 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table'
 import MoveButton from './MoveButton';
-import { lastMove, fen } from "../view-model/chessLogic";
+import { toGame } from "../logic/chessLogic";
 
-const MoveTracker = () => {
+const MoveTracker = (props) => {
 
-    const [moveList, setMoveList] = useState([]);
+    const [pgn, setPgn] = useState("");
+    // const [inVariation, setInVariation] = useState(false);
+    // const [variationPgn, setVariationPgn] = useState(""); // also a pgn
+    // const [currentMove, setCurrentMove] = useState(0);  // index of current move in the pgn
 
-    // code run on component init
     useEffect(() => {
-        lastMove.bindFunction((newMove) => {
-            setMoveList((prev) => {
-                return [...prev, {move: newMove, fen: fen.value}]
-            })
-        });
-    }, [])
+        props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
+        // props.chessState.addCallback(props.chessState.variables.currentMove, setCurrentMove);
+    }, [props.chessState])
 
+    // recursively go through moves in the game tree
+    const getRows = (moves, index) => {
+        var moveCount = moves.length;
+
+        if (moveCount === 0) {
+            // no moves left
+            return
+        }
+        if (moveCount === 1) {
+            // only a white move
+            return (
+                <tr>
+                    <MoveButton onClick={props.onMoveClick} san={moves[0].san} index={index}/>
+                </tr>
+            )
+        }
+        return [
+            <tr>
+                <MoveButton onClick={props.onMoveClick} san={moves[0].san} index={index}/>
+                <MoveButton onClick={props.onMoveClick} san={moves[1].san} index={index + 1}/>
+            </tr>,
+            getRows(moves.slice(2), index + 2)  // plus two for white and black move
+        ]
+    }
+
+    // one table row for a white move + black move
     return (
         <Table bordered variant="dark" className="move-table">
             <tbody>
-                <tr>
-                    {/* {moveList.map((info, index) => {
-                        return <MoveButton move={info.move.san} fen={info.fen}/>
-                    })} */}
-                </tr>
+                {getRows(toGame(pgn).history({verbose: true}), 0)}
             </tbody>
         </Table>
     )

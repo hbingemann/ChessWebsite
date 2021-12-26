@@ -1,9 +1,9 @@
 import './index.css';
-import { useState, useEffect } from 'react';
-import Navbar from "./components/Navbar"
+import Navbar from "./components/Navbar";
 import { Switch, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage"
-import Analysis from "./pages/Analysis"
+import HomePage from "./pages/HomePage";
+import Analysis from "./pages/Analysis";
+
 
 const App = (props) => {
 
