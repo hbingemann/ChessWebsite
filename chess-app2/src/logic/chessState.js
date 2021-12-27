@@ -4,9 +4,9 @@ export const chessStateConst = {
     fen: startFen,
     lastMove: [],
     pgn: "",
-    currentMove: 0,
+    currentMove: -1,
     inVariation: false,
-    variationPgn: "",
+    variationPgn: "", // includes the move where the variation starts
 
     callbacks: {},
     set: (varName, value) => {
@@ -40,7 +40,7 @@ export const chessStateConst = {
         fen: startFen,
         lastMove: [],
         pgn: "",
-        currentMove: 0,
+        currentMove: -1,
         inVariation: false,
         variationPgn: "",
     }

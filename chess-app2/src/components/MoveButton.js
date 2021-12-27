@@ -1,19 +1,26 @@
 // this is part of the movetracker
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const MoveButton = (props) => {
 
-    // must know index of move, name of move, maybe something else
+    const [current, setCurrent] = useState(props.chessState.currentMove);
+
+    // must know index of move, name of move, color of move
     const onClick = () => {
         props.onClick(props.index)
-        console.log(`move click: ${props.index + 1}, ${props.san}`)
     }
 
-    return (
-        <td onClick={onClick}>
-            {props.index + 1}: {props.san}
+    useEffect(() => {
+        props.chessState.addCallback(props.chessState.variables.currentMove, setCurrent);
+        setCurrent(props.chessState.currentMove)
+    }, [props.chessState])
+
+    return [
+        props.color === "w" && <td className="move-number">{props.index / 2 + 1}</td>,
+        <td className={"move-name" + (props.index === current ? " current-move" : "")} onClick={onClick}>
+            {props.san}
         </td>
-    )
+    ]
 }
 
 export default MoveButton

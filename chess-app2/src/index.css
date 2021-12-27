@@ -54,3 +54,19 @@ body {
 	width: 40vmin;
 	height: auto;
 }
+
+.move-number {
+	width: 10%
+}
+
+.move-name:hover {
+	color: blue;
+}
+
+.current-move {
+	color: green;
+}
+
+.move-name {
+	width: 45%
+}

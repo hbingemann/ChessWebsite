@@ -27,14 +27,17 @@ const MoveTracker = (props) => {
             // only a white move
             return (
                 <tr>
-                    <MoveButton onClick={props.onMoveClick} san={moves[0].san} index={index}/>
+                    <MoveButton onClick={props.onMoveClick} san={moves[0].san} 
+                    index={index} color={moves[0].color} chessState={props.chessState}/>
                 </tr>
             )
         }
         return [
             <tr>
-                <MoveButton onClick={props.onMoveClick} san={moves[0].san} index={index}/>
-                <MoveButton onClick={props.onMoveClick} san={moves[1].san} index={index + 1}/>
+                <MoveButton onClick={props.onMoveClick} san={moves[0].san} 
+                index={index} color={moves[0].color} chessState={props.chessState}/>
+                <MoveButton onClick={props.onMoveClick} san={moves[1].san} 
+                index={index + 1} color={moves[1].color} chessState={props.chessState}/>
             </tr>,
             getRows(moves.slice(2), index + 2)  // plus two for white and black move
         ]

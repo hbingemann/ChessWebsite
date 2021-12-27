@@ -32,8 +32,8 @@ const Board = (props) => {
             <Chessground
                 width="70vmin"
                 height="70vmin"
-                turnColor={getCurrentTurn(toGame(props.chessState.pgn))}
-                movable={getMoves(toGame(props.chessState.pgn))}
+                turnColor={getCurrentTurn(new Chess(fen))}
+                movable={getMoves(new Chess(fen))}
                 fen={fen}
                 lastMove={lastMove}
                 onMove={props.handleMove}

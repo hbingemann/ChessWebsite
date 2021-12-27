@@ -35,7 +35,7 @@ export function getLastMove(game, index) {
         return null; // no moves have been made yet
     }
     if (index === undefined) {
-        index = length;  // default to most recent move
+        index = length - 1;  // default to most recent move
     }
     var lastMove = game.history({verbose: true})[index];
     if (lastMove) {  
@@ -70,7 +70,7 @@ export function getGameLength(game) {
 export function getFenAtIndex(index, game) {
     var chess = new Chess();
     var history = game.history();
-    for (var i = 0; i < index; i++) {
+    for (var i = 0; i < index + 1; i++) {
         chess.move(history[i]);
     }
     return chess.fen();
