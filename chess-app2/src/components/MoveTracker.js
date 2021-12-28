@@ -45,7 +45,7 @@ const MoveTracker = (props) => {
 
     // one table row for a white move + black move
     return (
-        <Table bordered variant="dark" className="move-table">
+        <Table size="sm" bordered variant="dark" className="move-table">
             <tbody>
                 {getRows(toGame(pgn).history({verbose: true}), 0)}
             </tbody>

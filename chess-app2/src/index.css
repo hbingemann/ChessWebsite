@@ -4,8 +4,10 @@
 }
 
 :root {
-	--primarycolor: lightblue;
+	--primarycolor: rgb(173, 216, 230);
+	--primarydarkcolor: rgb(60, 77, 83); 
 	--darkcolor: rgb(43, 43, 43);
+	--darkercolor: rgb(31, 31, 31);
 	--lightcolor: white;
 }
 
@@ -49,22 +51,23 @@ body {
 	padding: 0 2vw;
 }
 
-.move-table {
+table.move-table {
 	margin: 50px;
 	width: 40vmin;
 	height: auto;
+	background: var(--darkercolor);
 }
 
 .move-number {
 	width: 10%
 }
 
-.move-name:hover {
-	color: blue;
+.current-move {
+	background: var(--primarydarkcolor)
 }
 
-.current-move {
-	color: green;
+.move-name:hover {
+	background: var(--darkcolor)
 }
 
 .move-name {
