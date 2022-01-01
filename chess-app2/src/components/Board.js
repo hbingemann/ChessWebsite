@@ -15,18 +15,8 @@ const Board = (props) => {
         props.chessState.addCallback(props.chessState.variables.lastMove, setLastMove)
     }, [props.chessState])
 
-    // options:
-    // - make apiCommunicator setFen and setLastMove
-    // - have the function in apiCommunicator return something
-    // - bind setFen/setLastMove to a function in apicommunicator
-    // - DO THIS I THINK: wrap board and movetracker in a component that makes api calls
+    // where to put stockfish ?
     
-    // GET RID OF API STEPS:
-    // 1. figure out a way to track the pgn of the with variations (pgn in a comment)
-    // 2. use that method in an outer scope, probably a context
-    // 3. figure out how to keep track of the current move
-    // 4. then implement all of the above steps
-
     return (
         <div className="board-container">
             <Chessground

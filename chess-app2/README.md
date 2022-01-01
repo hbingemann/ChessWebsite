@@ -1,3 +1,0 @@
-# Chess Analysis Website
-
-Yup

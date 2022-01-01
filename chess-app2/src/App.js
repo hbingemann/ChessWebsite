@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Analysis from "./pages/Analysis";
 
-
 const App = (props) => {
 
   return (

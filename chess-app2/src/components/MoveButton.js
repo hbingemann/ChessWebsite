@@ -15,12 +15,11 @@ const MoveButton = (props) => {
         setCurrent(props.chessState.currentMove)
     }, [props.chessState])
 
-    return [
-        props.color === "w" && <td className="move-number">{props.index / 2 + 1}</td>,
-        <td className={"move-name" + (props.index === current ? " current-move" : "")} onClick={onClick}>
+    return (
+        <td className={"move-block " + (props.index === current ? "current-move" : "move-name")} onClick={onClick}>
             {props.san}
         </td>
-    ]
+    )
 }
 
 export default MoveButton
