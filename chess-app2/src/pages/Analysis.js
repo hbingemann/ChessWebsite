@@ -66,13 +66,20 @@ const Analysis = () => {
     const handleKeyPress = (e) => {
         switch (e.key) {
             case "ArrowRight":
-                // goForwardAMove();
+                goForwardAMove();
                 break;
             case "ArrowLeft":
                 goBackAMove();
                 break;
             default:
                 break;
+        }
+    }
+
+    const goForwardAMove = () => {
+        // might want to change this functionality later
+        if (!chessState.inVariation) {
+            updateCurrentMove(chessState.currentMove + 1);
         }
     }
 
@@ -99,14 +106,14 @@ const Analysis = () => {
             }
         } else {
             // set current move to - 1, update fen and lastmove
-            if (chessState.currentMove >= 0) {  
-                console.log("updated current move")
-                updateCurrentMove(chessState.currentMove - 1);
-            }
+            updateCurrentMove(chessState.currentMove - 1);
         }
     }
 
     const updateCurrentMove = (newCurrent) => {
+        if (newCurrent >= getGameLength(toGame(chessState.pgn)) || newCurrent < 0) {
+            return // since we would be setting current move to an invalid index
+        }
         chessState.set(chessState.variables.currentMove, newCurrent);
         chessState.set(chessState.variables.fen, getFenAtIndex(newCurrent, toGame(chessState.pgn)));
         chessState.set(chessState.variables.lastMove, getLastMove(toGame(chessState.pgn), newCurrent));

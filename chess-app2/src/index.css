@@ -4,8 +4,8 @@
 }
 
 :root {
-	--primarylightcolor: rgb(187, 232, 247);
-	--primarycolor: rgb(135, 170, 182);
+	--primarycolor: rgb(91, 115, 122);
+	--primarylightcolor: rgb(135, 170, 182);
 	--primarydarkcolor: rgb(60, 77, 83); 
 	--darkishcolor: rgb(55, 55, 55);
 	--darkcolor: rgb(43, 43, 43);
@@ -76,6 +76,10 @@ table.move-table {
 }
 
 .current-move {
+	background: var(--primarycolor);
+}
+
+.in-variation {
 	background: var(--primarydarkcolor)
 }
 
