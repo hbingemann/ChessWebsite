@@ -68,7 +68,7 @@ export function getGameLength(game) {
 
 // return the fen given a current move and game
 export function getFenAtIndex(index, game) {
-    var chess = new Chess();
+    var chess = new Chess(game.header().FEN);
     var history = game.history();
     for (var i = 0; i < index + 1; i++) {
         chess.move(history[i]);

@@ -1,8 +1,8 @@
 import React from 'react'
-import { useRef, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Chessground from "react-chessground"
 import "react-chessground/dist/styles/chessground.css"
-import { getMoves, getCurrentTurn, getLastMove, startFen, toGame } from "../logic/chessLogic";
+import { getMoves, getCurrentTurn, startFen } from "../logic/chessLogic";
 import Chess from "chess.js";
 
 const Board = (props) => {

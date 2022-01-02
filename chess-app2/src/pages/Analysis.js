@@ -1,13 +1,19 @@
-import React, { useState }from 'react';
+import React, { useEffect }from 'react';
 import Board from "../components/Board";
 import MoveTracker from '../components/MoveTracker';
-import { toGame, getGameLength, getFenAtIndex, startFen, getLastMove } from '../logic/chessLogic';
+import { toGame, getGameLength, getFenAtIndex, getLastMove } from '../logic/chessLogic';
 import { chessStateConst } from '../logic/chessState';
 import Chess from "chess.js";
 
 const Analysis = () => {
 
     const chessState = chessStateConst;
+
+    useEffect(() => {
+        // run on page init
+        window.addEventListener("keyup", handleKeyPress);  // also try keydown
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     
     const handleMove = (from, to, piece_taken) => {
         var game = toGame(chessState.pgn);
@@ -27,7 +33,7 @@ const Analysis = () => {
             // if they are the same just do currentMove ++
             // otherwise start a variation
             var currentNextFen = getFenAtIndex(chessState.currentMove + 1, game);
-            var variation = new Chess(chessState.fen);
+            variation = new Chess(chessState.fen);
             variation.move({ from: from, to: to, promotion: promotion });
             if (variation.fen() === currentNextFen) {
                 // update currentmove and fen since no new variation needs to be made
@@ -51,11 +57,62 @@ const Analysis = () => {
 
     const handleMoveClick = (index) => {
         // set current move, update fen, update last move
-        chessState.set(chessState.variables.currentMove, index);
-        chessState.set(chessState.variables.fen, getFenAtIndex(index, toGame(chessState.pgn)));
-        chessState.set(chessState.variables.lastMove, getLastMove(toGame(chessState.pgn), index));
+        updateCurrentMove(index);
 
-        // reset the variation, also reset when go back a move, do that in another function
+        // reset the variation
+        resetVariation();
+    }
+
+    const handleKeyPress = (e) => {
+        switch (e.key) {
+            case "ArrowRight":
+                // goForwardAMove();
+                break;
+            case "ArrowLeft":
+                goBackAMove();
+                break;
+            default:
+                break;
+        }
+    }
+
+    const goBackAMove = () => {
+        console.log("back function called")
+        if (chessState.inVariation) {
+            // remove last move from variation
+            // if we are on the move after current move, leave the variation
+            var variation = toGame(chessState.variationPgn);
+            console.log(chessState.variationPgn)
+            var variationLength = getGameLength(variation);
+            console.log(variationLength)
+            if (variationLength < 2) {
+                resetVariation();
+                updateCurrentMove(chessState.currentMove);
+                console.log("reset variation")
+            } else {
+                // go back a move and update variation, fen, and lastmove
+                variation.undo()
+                chessState.set(chessState.variables.variationPgn, variation.pgn())
+                chessState.set(chessState.variables.fen, getFenAtIndex(getGameLength(variation), variation));
+                chessState.set(chessState.variables.lastMove, getLastMove(variation));
+                console.log("updated variation")
+            }
+        } else {
+            // set current move to - 1, update fen and lastmove
+            if (chessState.currentMove >= 0) {  
+                console.log("updated current move")
+                updateCurrentMove(chessState.currentMove - 1);
+            }
+        }
+    }
+
+    const updateCurrentMove = (newCurrent) => {
+        chessState.set(chessState.variables.currentMove, newCurrent);
+        chessState.set(chessState.variables.fen, getFenAtIndex(newCurrent, toGame(chessState.pgn)));
+        chessState.set(chessState.variables.lastMove, getLastMove(toGame(chessState.pgn), newCurrent));
+    }
+
+    const resetVariation = () => {
         chessState.set(chessState.variables.variationPgn, chessState.defaults.variationPgn);
         chessState.set(chessState.variables.inVariation, chessState.defaults.inVariation);
     }

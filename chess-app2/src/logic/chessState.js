@@ -4,7 +4,7 @@ export const chessStateConst = {
     fen: startFen,
     lastMove: [],
     pgn: "",
-    currentMove: -1,
+    currentMove: -1, // won't be zero until the first move has been made
     inVariation: false,
     variationPgn: "", // includes the move where the variation starts
 

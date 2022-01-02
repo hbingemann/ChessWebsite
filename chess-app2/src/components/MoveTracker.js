@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Table from 'react-bootstrap/Table'
 import MoveButton from './MoveButton';
 import { toGame } from "../logic/chessLogic";
 import ToggleButton from 'react-toggle-button';
