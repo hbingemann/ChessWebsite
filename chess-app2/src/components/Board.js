@@ -15,8 +15,6 @@ const Board = (props) => {
         props.chessState.addCallback(props.chessState.variables.lastMove, setLastMove)
     }, [props.chessState])
 
-    // where to put stockfish ?
-    
     return (
         <div className="board-container">
             <Chessground

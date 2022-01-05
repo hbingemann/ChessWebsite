@@ -2,3 +2,6 @@ Packages I am using:
 - chess.js
 - react bootstrap
 - react toggle button
+- react chessground
+- stockfish
+- stockfish (python package)

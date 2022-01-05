@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import MoveButton from './MoveButton';
 import { toGame } from "../logic/chessLogic";
 import ToggleButton from 'react-toggle-button';
+var stockfish = new Worker("stockfish.js")
 
 const MoveTracker = (props) => {
 
@@ -13,16 +14,27 @@ const MoveTracker = (props) => {
 
     useEffect(() => {
         props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
-        // props.chessState.addCallback(props.chessState.variables.currentMove, setCurrentMove);
+        stockfish.onmessage = handleStockfishMessage;
     }, [props.chessState])
+
+    useEffect(() => {
+        console.log("Analyzing: " + analyzing)
+        if (analyzing) {
+            stockfish.postMessage("go depth 10")
+        } else {
+            stockfish.postMessage("stop")
+        }
+    }, [analyzing])
+
+    const handleStockfishMessage = (e) => {
+        console.log(e.data)
+    }
 
     // recursively go through moves in the game tree
     // want to always create 15 moves
     const getRows = (moves, index) => {
         var moveCount = moves.length;
         var currentRow = index / 2 + 1;
-
-        //TODO: if we are too far before the current move we dont want to show moves more than table length before it
 
         if (moveCount === 0) {
             // no moves left

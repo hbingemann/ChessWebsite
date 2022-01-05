@@ -4,7 +4,7 @@
 }
 
 :root {
-	--primarycolor: rgb(91, 115, 122);
+	--primarycolor: rgb(81, 101, 107);
 	--primarylightcolor: rgb(135, 170, 182);
 	--primarydarkcolor: rgb(60, 77, 83); 
 	--darkishcolor: rgb(55, 55, 55);
@@ -59,6 +59,7 @@ body {
 .move-table-container {
 	height: 70vmin;
 	overflow-y: auto;
+	overflow-x: hidden;
 	margin: 50px;
 	background: var(--darkercolor);
 }

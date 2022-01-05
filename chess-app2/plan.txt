@@ -1,5 +1,5 @@
-make move clicking work
-change css so that the move tracker looks a little better ...
+make arrows show stockfish best move
+show stockfish eval
 add loading pgns
 make stockfish show best move
 connect loading pgns to backend
