@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 
 const MoveButton = (props) => {
 
-    const [current, setCurrent] = useState(props.chessState.currentMove);
+    const [current, setCurrent] = useState(-1);
     const [inVariation, setInVariation] = useState(false);
 
     // must know index of move, name of move, color of move
