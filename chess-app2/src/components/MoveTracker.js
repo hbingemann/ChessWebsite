@@ -1,35 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import MoveButton from './MoveButton';
 import { toGame } from "../logic/chessLogic";
-import ToggleButton from 'react-toggle-button';
-var stockfish = new Worker("stockfish.js")
+import Button from "react-bootstrap/Button"
+import { getEvaluation } from '../logic/stockfish';
 
 const MoveTracker = (props) => {
 
     const [pgn, setPgn] = useState("");
-    const [analyzing, setAnalyzing] = useState(false);
-    // const [inVariation, setInVariation] = useState(false);
-    // const [variationPgn, setVariationPgn] = useState(""); // also a pgn
-    // const [currentMove, setCurrentMove] = useState(0);  // index of current move in the pgn
+    const [evaluation, setEvaluation] = useState([]);
+    const [loadingEval, setLoadingEval] = useState(false);
 
     useEffect(() => {
         props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
-        stockfish.onmessage = handleStockfishMessage;
     }, [props.chessState])
 
-    useEffect(() => {
-        console.log("Analyzing: " + analyzing)
-        if (analyzing) {
-            stockfish.postMessage("go depth 10")
-        } else {
-            stockfish.postMessage("stop")
-        }
-    }, [analyzing])
-
-    const handleStockfishMessage = (e) => {
-        console.log(e.data)
+    const updateEvaluation = () => {
+        setLoadingEval(true);
+        getEvaluation(props.chessState.fen, (newEval) => {
+            // code run when evaluation finishes
+            setLoadingEval(false);
+            setEvaluation(newEval);
+        });
     }
 
+    const getFormattedEval = () => {
+        if (evaluation.length > 0) {
+            var topMoveEval = evaluation[0];
+            var formatted = topMoveEval.Move;
+            if (topMoveEval.Centipawn !== null) {
+                var pawnEval = topMoveEval.Centipawn / 100;
+                formatted += (pawnEval > 0 ? "+" : "") + pawnEval;
+            } else {
+                formatted += "#" + topMoveEval.Mate;
+            }
+            console.log(formatted)
+            return formatted;
+        }
+        return "";
+    }
+    
     // recursively go through moves in the game tree
     // want to always create 15 moves
     const getRows = (moves, index) => {
@@ -75,12 +84,14 @@ const MoveTracker = (props) => {
             }}>
                 <span style={{
                     padding: "1em"
-                }}>Stockfish</span>
-                <ToggleButton
-                    onClick={() => setAnalyzing(!analyzing)} 
-                    value={analyzing}
-                    containerStyle={{display: "inline-block", float: "right", padding: ".1em"}}
-                />
+                }}>Stockfish {getFormattedEval()}</span>
+                <Button
+                    size="sm"
+                    variant="success"
+                    onClick={updateEvaluation}
+                    disabled={loadingEval}
+                    style={{float: "right", padding: ".15em .5em", fontSize: "80%", background: "filter(brightness(30%))"}}
+                >{loadingEval ? "Loading..." : "Analyze"}</Button>
             </div>
             <table className="move-table">
                 <tbody>
