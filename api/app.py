@@ -1,35 +1,27 @@
 from flask import Flask, request, jsonify
-from stockfish_wrapper import StockfishWrapper
+from stockfish import Stockfish
 import time
+import json
 
 
 app = Flask(__name__)
 
 stockfish_location = ".\stockfish\stockfish_14.1_win_x64_avx2\stockfish_14.1_win_x64_avx2.exe"
-stockfish = StockfishWrapper(stockfish_location)
+stockfish = Stockfish(stockfish_location, depth=20)
 
-@app.route("/stop", methods=["POST"])
-def stop():
-    pass
 
-@app.route("/eval", methods=["POST"])
+@app.route("/topmoves", methods=["POST"])
 def eval():
     json = request.json
     position = json["position"]
+    moves = int(json["moves"])
 
     stockfish.set_fen_position(position)
-    # stockfish.
+    move_choices = stockfish.get_top_moves(moves)
 
-    return jsonify({
-        "cp",
-        "bestmove",
-    })
+    return json.dumps(move_choices)
+
 
 if __name__ == "__main__":
-    # # app.run(debug=True)
+    app.run(debug=True)
 
-    stockfish.go_infinite()
-    time.sleep(0.3)
-    stockfish.stop()
-    stockfish.get_most_recent_eval()
-    
