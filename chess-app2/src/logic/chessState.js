@@ -7,6 +7,7 @@ export const chessStateConst = {
     currentMove: -1, // won't be zero until the first move has been made
     inVariation: false,
     variationPgn: "", // includes the move where the variation starts
+    shapes: [],
 
     callbacks: {},
     set: (varName, value) => {
@@ -35,6 +36,7 @@ export const chessStateConst = {
         currentMove: "currentMove",
         inVariation: "inVariation",
         variationPgn: "variationPgn",
+        shapes: "shapes",
     },
     defaults: {
         fen: startFen,
@@ -43,5 +45,6 @@ export const chessStateConst = {
         currentMove: -1,
         inVariation: false,
         variationPgn: "",
+        shapes: [],
     }
 }

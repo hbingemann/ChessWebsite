@@ -11,7 +11,7 @@ const Analysis = () => {
 
     useEffect(() => {
         // run on page init
-        window.addEventListener("keyup", handleKeyPress);  // also try keydown
+        window.addEventListener("keydown", handleKeyPress);  // also try keydown
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     

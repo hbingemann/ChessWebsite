@@ -3,6 +3,7 @@ import MoveButton from './MoveButton';
 import { toGame } from "../logic/chessLogic";
 import Button from "react-bootstrap/Button"
 import { getEvaluation } from '../logic/stockfish';
+import ToggleButton from "react-toggle-button"
 
 const MoveTracker = (props) => {
 
@@ -12,6 +13,7 @@ const MoveTracker = (props) => {
 
     useEffect(() => {
         props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
+        props.chessState.addCallback(props.chessState.variables.fen, () => props.chessState.set(props.chessState.variables.shapes, props.chessState.defaults.shapes))
     }, [props.chessState])
 
     const updateEvaluation = () => {
@@ -20,13 +22,27 @@ const MoveTracker = (props) => {
             // code run when evaluation finishes
             setLoadingEval(false);
             setEvaluation(newEval);
+            // update stockfish move on board
+            var shapes = [];
+            if (newEval.length === 0) {
+                return
+            }
+            var move = newEval[0].Move;
+            console.log(move);
+            console.log(typeof(move))
+            var from = move.slice(0, 2);
+            var to = move.slice(2, 4);
+            shapes.push({
+                orig: from, dest: to, brush: "paleBlue"
+            })
+            props.chessState.set(props.chessState.variables.shapes, shapes)
         });
     }
 
     const getFormattedEval = () => {
         if (evaluation.length > 0) {
             var topMoveEval = evaluation[0];
-            var formatted = topMoveEval.Move;
+            var formatted = "";
             if (topMoveEval.Centipawn !== null) {
                 var pawnEval = topMoveEval.Centipawn / 100;
                 formatted += (pawnEval > 0 ? "+" : "") + pawnEval;
@@ -90,7 +106,7 @@ const MoveTracker = (props) => {
                     variant="success"
                     onClick={updateEvaluation}
                     disabled={loadingEval}
-                    style={{float: "right", padding: ".15em .5em", fontSize: "80%", background: "filter(brightness(30%))"}}
+                    style={{float: "right", padding: ".15em .5em", fontSize: "80%"}}
                 >{loadingEval ? "Loading..." : "Analyze"}</Button>
             </div>
             <table className="move-table">
