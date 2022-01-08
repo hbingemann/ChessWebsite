@@ -4,6 +4,7 @@ import MoveTracker from '../components/MoveTracker';
 import { toGame, getGameLength, getFenAtIndex, getLastMove } from '../logic/chessLogic';
 import { chessStateConst } from '../logic/chessState';
 import Chess from "chess.js";
+import PgnLoading from '../components/PgnLoading';
 
 const Analysis = () => {
 
@@ -126,6 +127,7 @@ const Analysis = () => {
 
     return (
         <>
+            <PgnLoading chessState={chessState}/>
             <Board handleMove={handleMove} chessState={chessState}/>
             <MoveTracker onMoveClick={handleMoveClick} chessState={chessState}/>
         </>

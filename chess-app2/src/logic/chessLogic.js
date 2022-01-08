@@ -16,6 +16,12 @@ export function getMoves(game) {
     }
 }
 
+// returns if given pgn is valid and can be parsed
+export function isValidPgn(pgn) {
+    var chess = new Chess();
+    return chess.load_pgn(pgn);
+}
+
 // returns the current turn in the game
 export function getCurrentTurn(game) {
     return game.turn() === game.WHITE ? "white" : "black";

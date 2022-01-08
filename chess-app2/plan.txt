@@ -1,5 +1,4 @@
 add loading pgns
-make stockfish show best move
-connect loading pgns to backend
 be able to load chess.com and lichess pgns
 be able to load world chess championship pgns (hide spoilers)
+performance

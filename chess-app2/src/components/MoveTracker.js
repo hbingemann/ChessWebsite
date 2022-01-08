@@ -15,6 +15,7 @@ const MoveTracker = (props) => {
         props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
         props.chessState.addCallback(props.chessState.variables.fen, () => props.chessState.set(props.chessState.variables.shapes, props.chessState.defaults.shapes))
         window.addEventListener("keypress", handleKeyPress)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.chessState])
 
     const handleKeyPress = (e) => {
@@ -117,7 +118,7 @@ const MoveTracker = (props) => {
                     variant="success"
                     onClick={updateEvaluation}
                     disabled={loadingEval}
-                    style={{float: "right", padding: ".15em .5em", fontSize: "80%"}}
+                    style={{float: "right", padding: ".15em .5em", fontSize: "85%"}}
                 >{loadingEval ? "Loading..." : "Analyze"}</Button>
             </div>
             <table className="move-table">

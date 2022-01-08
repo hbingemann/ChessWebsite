@@ -1,13 +1,23 @@
 const startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-export const chessStateConst = {
+const defaults = {
     fen: startFen,
     lastMove: [],
     pgn: "",
-    currentMove: -1, // won't be zero until the first move has been made
+    currentMove: -1,
     inVariation: false,
-    variationPgn: "", // includes the move where the variation starts
+    variationPgn: "",
     shapes: [],
+}
+
+export const chessStateConst = {
+    fen: defaults.startFen,
+    lastMove: defaults.lastMove,
+    pgn: defaults.pgn,
+    currentMove: defaults.currentMove, // won't be zero until the first move has been made
+    inVariation: defaults.inVariation,
+    variationPgn: defaults.variationPgn, // includes the move where the variation starts
+    shapes: defaults.shapes,
 
     callbacks: {},
     set: (varName, value) => {
@@ -38,13 +48,11 @@ export const chessStateConst = {
         variationPgn: "variationPgn",
         shapes: "shapes",
     },
-    defaults: {
-        fen: startFen,
-        lastMove: [],
-        pgn: "",
-        currentMove: -1,
-        inVariation: false,
-        variationPgn: "",
-        shapes: [],
+    defaults: defaults,
+
+    resetDefaults: () => {
+        for (var item in chessStateConst.variables) {
+            chessStateConst[item] = defaults[item];
+        }
     }
 }

@@ -7,7 +7,7 @@ import json
 app = Flask(__name__)
 
 stockfish_location = ".\stockfish\stockfish_14.1_win_x64_avx2\stockfish_14.1_win_x64_avx2.exe"
-stockfish = Stockfish(stockfish_location, depth=14)
+stockfish = Stockfish(stockfish_location, depth=15)
 
 
 @app.route("/topmoves", methods=["POST"])
