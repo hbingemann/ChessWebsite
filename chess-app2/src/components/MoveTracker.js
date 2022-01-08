@@ -27,7 +27,6 @@ const MoveTracker = (props) => {
         }
     }
 
-
     const updateEvaluation = () => {
         setLoadingEval(true);
         getEvaluation(props.chessState.fen, (newEval) => {

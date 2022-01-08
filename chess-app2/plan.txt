@@ -1,5 +1,3 @@
-make arrows show stockfish best move
-show stockfish eval
 add loading pgns
 make stockfish show best move
 connect loading pgns to backend
