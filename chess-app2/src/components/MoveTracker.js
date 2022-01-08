@@ -14,7 +14,19 @@ const MoveTracker = (props) => {
     useEffect(() => {
         props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
         props.chessState.addCallback(props.chessState.variables.fen, () => props.chessState.set(props.chessState.variables.shapes, props.chessState.defaults.shapes))
+        window.addEventListener("keypress", handleKeyPress)
     }, [props.chessState])
+
+    const handleKeyPress = (e) => {
+        switch (e.key) {
+            case "a":
+                updateEvaluation();
+                break;
+            default:
+                break;
+        }
+    }
+
 
     const updateEvaluation = () => {
         setLoadingEval(true);
