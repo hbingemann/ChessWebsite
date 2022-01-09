@@ -19,6 +19,27 @@ export function getEvaluation(position, callback) {
     })
 }
 
+export function getChessDotComGame(callback) {
+    fetch("/getpgn", {
+        method: "POST",
+        cache: "no-cache",
+        headers: { 
+            "content_type":"application/json",
+        },
+        body: JSON.stringify({
+            from: "chessdotcom",
+            user: "Henrik298"
+        })
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(json => {
+        // do some updates
+        callback(json)
+    })
+}
+
 // export function stopEvaluation() {
 //     fetch("/stop");
 // }

@@ -34,7 +34,7 @@ const MoveTracker = (props) => {
             // code run when evaluation finishes
             setLoadingEval(false);
             setEvaluation(newEval);
-            // update stockfish move on board
+            // update stockfish move on board with a move arrow
             var shapes = [];
             if (newEval.length === 0) {
                 return
@@ -109,6 +109,8 @@ const MoveTracker = (props) => {
                 background: "var(--darkishcolor)",
                 borderBottom: "solid",
                 borderColor: "var(--lightishcolor)",
+                position: "sticky",
+                top: 0,
             }}>
                 <span style={{
                     padding: "1em"

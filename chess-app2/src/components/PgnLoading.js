@@ -2,6 +2,7 @@ import React from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import { isValidPgn } from "../logic/chessLogic";
+import { getChessDotComGame } from "../logic/stockfish";
 
 function PgnLoading(props) {
 
@@ -24,6 +25,17 @@ function PgnLoading(props) {
                         loadPgn(text);
                     }} variant="success" style={{float: "right", margin: ".2em", padding: ".1em .3em"}}>Load</Button>
                     <Form.Control id="pgn-textarea" as="textarea" rows={4} style={{background: "var(--darkishcolor)", color: "inherit"}}></Form.Control>
+                <Form.Group> <br/>
+                </Form.Group>
+                <Form.Label>Load Recent Games</Form.Label> <br/>
+                <Button variant="success" onClick={() => {
+                    console.log("load")
+                    getChessDotComGame((json) => {
+                        console.log(json)
+                        loadPgn(json.pgn)
+                        console.log("loaded yay")
+                    })
+                }}>Chess.com</Button>
                 </Form.Group>
             </Form>
         </div>
