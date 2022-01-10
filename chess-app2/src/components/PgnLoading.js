@@ -29,11 +29,9 @@ function PgnLoading(props) {
                 </Form.Group>
                 <Form.Label>Load Recent Games</Form.Label> <br/>
                 <Button variant="success" onClick={() => {
-                    console.log("load")
                     getChessDotComGame((json) => {
                         console.log(json)
                         loadPgn(json.pgn)
-                        console.log("loaded yay")
                     })
                 }}>Chess.com</Button>
                 </Form.Group>

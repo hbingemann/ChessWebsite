@@ -3,7 +3,7 @@ import MoveButton from './MoveButton';
 import { toGame } from "../logic/chessLogic";
 import Button from "react-bootstrap/Button"
 import { getEvaluation } from '../logic/stockfish';
-import ToggleButton from "react-toggle-button"
+// import ToggleButton from "react-toggle-button"
 
 const MoveTracker = (props) => {
 

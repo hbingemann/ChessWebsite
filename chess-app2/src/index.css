@@ -7,11 +7,11 @@
 	--primarycolor: rgb(81, 101, 107);
 	--primarylightcolor: rgb(135, 170, 182);
 	--primarydarkcolor: rgb(60, 77, 83); 
-	--darkishcolor: rgb(55, 55, 55);
 	--darkcolor: rgb(43, 43, 43);
+	--darkishcolor: rgb(55, 55, 55);
 	--darkercolor: rgb(31, 31, 31);
-	--lightishcolor: rgb(180, 180, 180);
 	--lightcolor: rgb(226, 226, 226);
+	--lightishcolor: rgb(180, 180, 180);
 	--lightercolor: white;
 }
 
@@ -36,25 +36,33 @@ body {
 	color: var(--lightcolor);
 }
 
-.navbar {
-	padding: 2vh 2vw;
-	background: filter(brightness(120%));
+/********
+NAVBAR
+/********/
+
+.navbar * {
+	color: inherit;
+	margin: 0 1em;
 }
 
-.navbar > a {
+.navbar {
+	background: var(--darkishcolor)
+}
+
+.navbar a {
 	padding: 0 10px;
 	color: inherit;
 	text-decoration: none;
 }
 
-.navbar > a:hover {
-	opacity: .7;
+.navbar a:hover {
+	opacity: .5;
 }
 
-.navbar > h2 {
-	display: inline;
-	padding: 0 2vw;
-}
+/********
+ANALYSIS PAGE
+/********/
+
 
 .move-table-container {
 	height: 70vmin;

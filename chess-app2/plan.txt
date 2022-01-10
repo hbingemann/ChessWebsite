@@ -1,4 +1,11 @@
-add loading pgns
-be able to load chess.com and lichess pgns
-be able to load world chess championship pgns (hide spoilers)
-performance
+- be able to load chess.com pgns
+- make user sign so that loading chess.com games works with any user (TODO: give feedback)
+- give analysis feedback while analyzing
+- be able to load world chess championship pgns (hide spoilers)
+- performance
+- fix bugs
+- look nice
+- fix up home page (describe website + help section)
+- make website save game directly when swapping tabs
+
+next: make user sign in

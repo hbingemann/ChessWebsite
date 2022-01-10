@@ -20,6 +20,13 @@ export function getEvaluation(position, callback) {
 }
 
 export function getChessDotComGame(callback) {
+
+    if (!localStorage.getItem("username")) {
+        return {  // blank pgn if no username entered, TODO: send an alert
+            pgn: ""
+        }
+    }
+
     fetch("/getpgn", {
         method: "POST",
         cache: "no-cache",
