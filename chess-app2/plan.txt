@@ -8,4 +8,4 @@
 - fix up home page (describe website + help section)
 - make website save game directly when swapping tabs
 
-next: make user sign in
+next: performance (make a board state with fen and lastMove)

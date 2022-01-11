@@ -13,7 +13,6 @@ const MoveTracker = (props) => {
 
     useEffect(() => {
         props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
-        props.chessState.addCallback(props.chessState.variables.fen, () => props.chessState.set(props.chessState.variables.shapes, props.chessState.defaults.shapes))
         window.addEventListener("keypress", handleKeyPress)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.chessState])
@@ -30,7 +29,7 @@ const MoveTracker = (props) => {
 
     const updateEvaluation = () => {
         setLoadingEval(true);
-        getEvaluation(props.chessState.fen, (newEval) => {
+        getEvaluation(props.chessState.board.fen, (newEval) => {
             // code run when evaluation finishes
             setLoadingEval(false);
             setEvaluation(newEval);

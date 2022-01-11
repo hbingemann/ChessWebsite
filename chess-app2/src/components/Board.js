@@ -2,19 +2,31 @@ import React from 'react'
 import { useEffect, useState } from "react"
 import Chessground from "react-chessground"
 import "react-chessground/dist/styles/chessground.css"
-import { getMoves, getCurrentTurn, startFen } from "../logic/chessLogic";
-import Chess from "chess.js";
+import { getMoves, getCurrentTurn, startFen, fenToGame } from "../logic/chessLogic";
 
 const Board = (props) => {
 
-    const [fen, setFen] = useState(startFen);
-    const [lastMove, setLastMove] = useState([]);
-    const [shapes, setShapes] = useState([]);
+    // const [fen, setFen] = useState(startFen);
+    // const [lastMove, setLastMove] = useState([]);
+    // const [shapes, setShapes] = useState([]);
+    const [boardState, setBoardState] = useState({
+        fen: startFen,
+        lastMove: [],
+        shapes: [],
+    })
 
     useEffect(() => {
-        props.chessState.addCallback(props.chessState.variables.fen, setFen);
-        props.chessState.addCallback(props.chessState.variables.lastMove, setLastMove);
-        props.chessState.addCallback(props.chessState.variables.shapes, setShapes)
+        props.chessState.addCallback(props.chessState.variables.board, (board) => {
+            // setFen(board.fen);
+            // setLastMove(board.lastMove);
+            // setShapes([]);  // reset them when pieces on the board move
+            setBoardState({
+                fen: board.fen,
+                lastMove: board.lastMove,
+                shapes: []
+            })
+        })
+        props.chessState.addCallback(props.chessState.variables.shapes, (newShapes) => setBoardState({...boardState, shapes: newShapes}))
     }, [props.chessState])
 
     return (
@@ -22,12 +34,12 @@ const Board = (props) => {
             <Chessground
                 width="70vmin"
                 height="70vmin"
-                turnColor={getCurrentTurn(new Chess(fen))}
-                movable={getMoves(new Chess(fen))}
-                fen={fen}
-                lastMove={lastMove}
+                turnColor={getCurrentTurn(fenToGame(boardState.fen))}
+                movable={getMoves(fenToGame(boardState.fen))}
+                fen={boardState.fen}
+                lastMove={boardState.lastMove}
                 onMove={props.handleMove}
-                drawable={{autoShapes: shapes}}
+                drawable={{autoShapes: boardState.shapes}}
             />
         </div>
     )

@@ -13,7 +13,7 @@ function PgnLoading(props) {
         }
     }
 
-    return (  // add some bootstrap invalid functionality
+    return (  // TODO: add some bootstrap invalid functionality
         <div className="pgn-loading">
             <Form>
                 <Form.Group>
@@ -29,7 +29,7 @@ function PgnLoading(props) {
                 </Form.Group>
                 <Form.Label>Load Recent Games</Form.Label> <br/>
                 <Button variant="success" onClick={() => {
-                    getChessDotComGame((json) => {
+                    getChessDotComGame(localStorage.getItem("username"), (json) => {
                         console.log(json)
                         loadPgn(json.pgn)
                     })

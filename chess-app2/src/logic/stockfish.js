@@ -19,9 +19,9 @@ export function getEvaluation(position, callback) {
     })
 }
 
-export function getChessDotComGame(callback) {
+export function getChessDotComGame(username, callback) {
 
-    if (!localStorage.getItem("username")) {
+    if (typeof(username) !== "string") {
         return {  // blank pgn if no username entered, TODO: send an alert
             pgn: ""
         }
@@ -35,7 +35,7 @@ export function getChessDotComGame(callback) {
         },
         body: JSON.stringify({
             from: "chessdotcom",
-            user: "Henrik298"
+            user: username
         })
     })
     .then(response => {
