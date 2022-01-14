@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert"
 import { isValidPgn, toGame } from "../logic/chessLogic";
 import { getChessDotComGame } from "../logic/stockfish";
 
 function PgnLoading(props) {
+
+    const [loadingGame, setLoadingGame] = useState(false);
 
     const loadPgn = (pgn) => {
         if (isValidPgn(pgn)) {
@@ -28,12 +31,20 @@ function PgnLoading(props) {
                 <Form.Group> <br/>
                 </Form.Group>
                 <Form.Label>Load Recent Games</Form.Label> <br/>
-                <Button variant="success" onClick={() => {
-                    getChessDotComGame(localStorage.getItem("username"), (json) => {
-                        console.log(json)
-                        loadPgn(json.pgn)
-                    })
-                }}>Chess.com</Button>
+                <Button 
+                    variant="success" 
+                    onClick={() => {
+                        setLoadingGame(true)
+                        getChessDotComGame(localStorage.getItem("username"), (json) => {
+                            console.log(json)
+                            setLoadingGame(false)
+                            loadPgn(json.pgn)
+                        })
+                    }}
+                    disabled={loadingGame}
+                >
+                    {loadingGame ? "Loading..." : "Chess.com"}
+                </Button>
                 </Form.Group>
             </Form>
         </div>

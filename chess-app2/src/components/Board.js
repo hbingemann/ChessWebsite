@@ -6,9 +6,6 @@ import { getMoves, getCurrentTurn, startFen, fenToGame } from "../logic/chessLog
 
 const Board = (props) => {
 
-    // const [fen, setFen] = useState(startFen);
-    // const [lastMove, setLastMove] = useState([]);
-    // const [shapes, setShapes] = useState([]);
     const [boardState, setBoardState] = useState({
         fen: startFen,
         lastMove: [],

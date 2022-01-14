@@ -6,6 +6,7 @@ import Analysis from "./pages/Analysis";
 import Login from "./pages/Login"
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
+import Alert from "react-bootstrap/Alert"
 
 const App = (props) => {
 
