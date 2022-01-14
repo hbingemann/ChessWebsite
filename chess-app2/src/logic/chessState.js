@@ -1,10 +1,15 @@
+import Chess from "chess.js";
+import { getCopy } from "./chessLogic"
+
+
 const startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
+
 const defaults = {
-    pgn: "",
+    game: new Chess(),
     currentMove: -1,
     inVariation: false,
-    variationPgn: "",
+    variation: new Chess(),
     shapes: [],
     board: { 
         lastMove: [],
@@ -14,14 +19,13 @@ const defaults = {
 
 export const chessStateConst = {
     board: defaults.board,
-    pgn: defaults.pgn,
+    game: defaults.game,
     currentMove: defaults.currentMove, // won't be zero until the first move has been made
     inVariation: defaults.inVariation,
-    variationPgn: defaults.variationPgn, // includes the move where the variation starts
+    variation: defaults.variation, // includes the move where the variation starts
     shapes: defaults.shapes,
 
-    callbacks: {
-    },
+    callbacks: {},
     set: (varName, value) => {
         chessStateConst[varName] = value;
         var funcs = chessStateConst.callbacks[varName];
@@ -42,10 +46,10 @@ export const chessStateConst = {
     },
 
     variables: {  // these can be used in set func and add callback
-        pgn: "pgn",
+        game: "game",
         currentMove: "currentMove",
         inVariation: "inVariation",
-        variationPgn: "variationPgn",
+        variation: "variation",
         board: "board",
         shapes: "shapes",
     },

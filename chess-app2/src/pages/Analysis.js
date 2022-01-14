@@ -1,7 +1,7 @@
 import React, { useEffect, useRef }from 'react';
 import Board from "../components/Board";
 import MoveTracker from '../components/MoveTracker';
-import { toGame, getGameLength, getFenAtIndex, getLastMove } from '../logic/chessLogic';
+import { toGame, getGameLength, getFenAtIndex, getLastMove, getCopy } from '../logic/chessLogic';
 import { chessStateConst } from '../logic/chessState';
 import Chess from "chess.js";
 import PgnLoading from '../components/PgnLoading';
@@ -17,7 +17,7 @@ const Analysis = () => {
     }, [])
     
     const handleMove = (from, to, piece_taken) => {
-        var game = toGame(chessState.current.pgn);
+        var game = getCopy(chessState.current.game);
         var variation = null;
         var lastMove = [from, to];
 
@@ -26,9 +26,9 @@ const Analysis = () => {
         
         if (chessState.current.inVariation) {
             // just make the next move, ignore making another variation once already in a variation
-            variation = toGame(chessState.current.variationPgn);
+            variation = getCopy(chessState.current.variation);
             variation.move({ from: from, to: to, promotion: promotion });
-            chessState.current.set(chessState.current.variables.variationPgn, variation.pgn());
+            chessState.current.set(chessState.current.variables.variation, variation);
             chessState.current.set(chessState.current.variables.board, {
                 fen: variation.fen(),
                 lastMove: lastMove,
@@ -50,7 +50,7 @@ const Analysis = () => {
             } else {
                 // start a variation
                 chessState.current.set(chessState.current.variables.inVariation, true);
-                chessState.current.set(chessState.current.variables.variationPgn, variation.pgn());
+                chessState.current.set(chessState.current.variables.variation, variation);
                 chessState.current.set(chessState.current.variables.board, {
                     fen: variation.fen(),
                     lastMove: lastMove,
@@ -59,7 +59,7 @@ const Analysis = () => {
         } else {
             // just a regular move where current move is most recent move
             game.move({from: from, to: to, promotion: promotion});
-            chessState.current.set(chessState.current.variables.pgn, game.pgn())
+            chessState.current.set(chessState.current.variables.game, game)
             chessState.current.set(chessState.current.variables.currentMove, chessState.current.currentMove + 1)
             chessState.current.set(chessState.current.variables.board, {
                 fen: game.fen(),
@@ -100,7 +100,7 @@ const Analysis = () => {
         if (chessState.current.inVariation) {
             // remove last move from variation
             // if we are on the move after current move, leave the variation
-            var variation = toGame(chessState.current.variationPgn);
+            var variation = getCopy(chessState.current.variation);
             var variationLength = getGameLength(variation);
             if (variationLength < 2) {
                 resetVariation();
@@ -108,7 +108,7 @@ const Analysis = () => {
             } else {
                 // go back a move and update variation, fen, and lastmove
                 variation.undo()
-                chessState.current.set(chessState.current.variables.variationPgn, variation.pgn())
+                chessState.current.set(chessState.current.variables.variation, variation)
                 chessState.current.set(chessState.current.variables.board, {
                     fen: getFenAtIndex(getGameLength(variation), variation),
                     lastMove: getLastMove(variation),
@@ -121,18 +121,18 @@ const Analysis = () => {
     }
 
     const updateCurrentMove = (newCurrent) => {
-        if (newCurrent >= getGameLength(toGame(chessState.current.pgn)) || newCurrent < 0) {
+        if (newCurrent >= getGameLength(getCopy(chessState.current.game)) || newCurrent < 0) {
             return // since we would be setting current move to an invalid index
         }
         chessState.current.set(chessState.current.variables.currentMove, newCurrent);
         chessState.current.set(chessState.current.variables.board, {
-            fen: getFenAtIndex(newCurrent, toGame(chessState.current.pgn)),
-            lastMove: getLastMove(toGame(chessState.current.pgn), newCurrent),
+            fen: getFenAtIndex(newCurrent, getCopy(chessState.current.game)),
+            lastMove: getLastMove(getCopy(chessState.current.game), newCurrent),
         });
     }
 
     const resetVariation = () => {
-        chessState.current.set(chessState.current.variables.variationPgn, chessState.current.defaults.variationPgn);
+        chessState.current.set(chessState.current.variables.variation, chessState.current.defaults.variation);
         chessState.current.set(chessState.current.variables.inVariation, chessState.current.defaults.inVariation);
     }
 

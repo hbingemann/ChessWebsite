@@ -1,4 +1,5 @@
 import Chess from "chess.js";
+var lodash = require("lodash")
 
 export const startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
@@ -78,4 +79,9 @@ export function getFenAtIndex(index, game) {
 // return the move object given an index and a game
 export function getMoveAtIndex(index, game) {
     return game.history({ verbose: true })[index];
+}
+
+// make a copy of a game
+export function getCopy(game) {
+    return lodash.cloneDeep(game);
 }

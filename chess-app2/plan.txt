@@ -1,11 +1,12 @@
-- be able to load chess.com pgns
 - make user sign so that loading chess.com games works with any user (TODO: give feedback)
-- give analysis feedback while analyzing
+- give analysis feedback while analyzing (hard)
 - be able to load world chess championship pgns (hide spoilers)
+- fix up home page (describe website + help section)
+- make website save current game (when switching tabs, reloading page, etc..)
+
+ALWAYS:
 - performance
 - fix bugs
 - look nice
-- fix up home page (describe website + help section)
-- make website save game directly when swapping tabs
 
-next: performance (make a board state with fen and lastMove)
+NEXT: add feedback to user sign in

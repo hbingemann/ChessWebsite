@@ -1,7 +1,7 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
-import { isValidPgn } from "../logic/chessLogic";
+import { isValidPgn, toGame } from "../logic/chessLogic";
 import { getChessDotComGame } from "../logic/stockfish";
 
 function PgnLoading(props) {
@@ -9,7 +9,7 @@ function PgnLoading(props) {
     const loadPgn = (pgn) => {
         if (isValidPgn(pgn)) {
             props.chessState.resetDefaults();
-            props.chessState.set(props.chessState.variables.pgn, pgn);
+            props.chessState.set(props.chessState.variables.game, toGame(pgn));
         }
     }
 

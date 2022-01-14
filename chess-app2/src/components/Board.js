@@ -12,21 +12,20 @@ const Board = (props) => {
     const [boardState, setBoardState] = useState({
         fen: startFen,
         lastMove: [],
-        shapes: [],
     })
+    const [shapes, setShapes] = useState([]);
 
     useEffect(() => {
         props.chessState.addCallback(props.chessState.variables.board, (board) => {
-            // setFen(board.fen);
-            // setLastMove(board.lastMove);
-            // setShapes([]);  // reset them when pieces on the board move
+            // update entire board state
             setBoardState({
                 fen: board.fen,
                 lastMove: board.lastMove,
-                shapes: []
             })
+            // reset shapes when board is updated
+            setShapes([]);
         })
-        props.chessState.addCallback(props.chessState.variables.shapes, (newShapes) => setBoardState({...boardState, shapes: newShapes}))
+        props.chessState.addCallback(props.chessState.variables.shapes, setShapes)
     }, [props.chessState])
 
     return (
@@ -39,7 +38,7 @@ const Board = (props) => {
                 fen={boardState.fen}
                 lastMove={boardState.lastMove}
                 onMove={props.handleMove}
-                drawable={{autoShapes: boardState.shapes}}
+                drawable={{autoShapes: shapes}}
             />
         </div>
     )

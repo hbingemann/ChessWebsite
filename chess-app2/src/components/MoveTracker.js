@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import MoveButton from './MoveButton';
-import { toGame } from "../logic/chessLogic";
+import { getCopy } from "../logic/chessLogic";
 import Button from "react-bootstrap/Button"
 import { getEvaluation } from '../logic/stockfish';
+import Chess from "chess.js";
 // import ToggleButton from "react-toggle-button"
 
 const MoveTracker = (props) => {
 
-    const [pgn, setPgn] = useState("");
+    const [game, setGame] = useState(new Chess());
     const [evaluation, setEvaluation] = useState([]);
     const [loadingEval, setLoadingEval] = useState(false);
 
     useEffect(() => {
-        props.chessState.addCallback(props.chessState.variables.pgn, setPgn);
+        props.chessState.addCallback(props.chessState.variables.game, (newGame) => {setGame(getCopy(newGame))});
+        props.chessState.addCallback(props.chessState.variables.board, () => {
+            setEvaluation([]);
+            setLoadingEval(false);
+        })
         window.addEventListener("keypress", handleKeyPress)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.chessState])
@@ -30,17 +35,20 @@ const MoveTracker = (props) => {
     const updateEvaluation = () => {
         setLoadingEval(true);
         getEvaluation(props.chessState.board.fen, (newEval) => {
+            // if (loadingEval === false) {
+            //     // we turned off loading eval while evaluation was loading
+            //     return;
+            // }
             // code run when evaluation finishes
             setLoadingEval(false);
             setEvaluation(newEval);
             // update stockfish move on board with a move arrow
             var shapes = [];
             if (newEval.length === 0) {
-                return
+                // no evaluations
+                return;
             }
             var move = newEval[0].Move;
-            console.log(move);
-            console.log(typeof(move))
             var from = move.slice(0, 2);
             var to = move.slice(2, 4);
             shapes.push({
@@ -60,10 +68,10 @@ const MoveTracker = (props) => {
             } else {
                 formatted += "#" + topMoveEval.Mate;
             }
-            console.log(formatted)
             return formatted;
         }
-        return "";
+        // when there is no evaluation
+        return "--";
     }
     
     // recursively go through moves in the game tree
@@ -113,7 +121,7 @@ const MoveTracker = (props) => {
             }}>
                 <span style={{
                     padding: "1em"
-                }}>Stockfish {getFormattedEval()}</span>
+                }}>Stockfish<b>:</b> {getFormattedEval()}</span>
                 <Button
                     size="sm"
                     variant="success"
@@ -124,7 +132,7 @@ const MoveTracker = (props) => {
             </div>
             <table className="move-table">
                 <tbody>
-                    {getRows(toGame(pgn).history({verbose: true}), 0)}
+                    {getRows(game.history({verbose: true}), 0)}
                 </tbody>
             </table>
         </div>
