@@ -9,4 +9,4 @@ ALWAYS:
 - fix bugs
 - look nice
 
-NEXT: add feedback to user sign in
+NEXT: fix glitchy piece bug (occurs after game is 50+ long)

@@ -18,7 +18,7 @@ const MoveTracker = (props) => {
             setEvaluation([]);
             setLoadingEval(false);
         })
-        window.addEventListener("keypress", handleKeyPress)
+        window.onkeyup = handleKeyPress;
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.chessState])
 

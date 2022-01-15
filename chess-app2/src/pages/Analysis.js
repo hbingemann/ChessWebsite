@@ -12,7 +12,7 @@ const Analysis = () => {
 
     useEffect(() => {
         // run on page init
-        window.addEventListener("keydown", handleKeyPress);  // also try keydown
+        window.onkeydown = handleKeyPress;
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
@@ -77,12 +77,18 @@ const Analysis = () => {
     }
 
     const handleKeyPress = (e) => {
+        console.log(e.key)
+        
         switch (e.key) {
             case "ArrowRight":
+                console.log(chessState.current.currentMove)
                 goForwardAMove();
+                console.log(chessState.current.currentMove)
                 break;
             case "ArrowLeft":
+                console.log(chessState.current.currentMove)
                 goBackAMove();
+                console.log(chessState.current.currentMove)
                 break;
             default:
                 break;
